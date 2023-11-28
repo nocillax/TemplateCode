@@ -8,12 +8,12 @@ using namespace std;
 typedef long long int ll;
 
 vector <ll> G[R];
-bool visited[100];
+bool visited[R];
 vector <ll> path;
 stack <ll> st;
 ll x = -1; 
 
-void initGraph(vector <ll> v[7], ll x , ll y){
+void initGraph(vector <ll> v[R], ll x , ll y){
     v[x].push_back(y);
 }
 

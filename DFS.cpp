@@ -11,7 +11,7 @@ vector <ll> G[R];
 bool visited[100];
 vector <ll> path;
 stack <ll> st;
-ll x=-1; 
+ll x = -1; 
 
 void initGraph(vector <ll> v[7], ll x , ll y){
     v[x].push_back(y);

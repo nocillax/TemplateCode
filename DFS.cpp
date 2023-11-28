@@ -62,7 +62,7 @@ void DFS(int sr){
                     break;
                 }
             }
-                x = u;
+            x = u;
         }
 
     }

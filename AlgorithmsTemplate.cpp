@@ -1,0 +1,175 @@
+// ------------------------------------------------------------------------------
+#include <iostream>
+#include <stack>
+#include <vector>
+#include <queue>
+#include <utility>
+using namespace std;
+// ------------------------------------------------------------------------------
+typedef unsigned int ui;
+typedef long long int ll;
+typedef unsigned long long ull;
+typedef double db;
+typedef long double ldb;
+// ------------------------------------------------------------------------------
+#define FST_IO ios_base::sync_with_stdio(false); cin.tie(NULL);cout.tie(NULL);
+#define READ          freopen("in.txt","r",stdin)
+#define WRITE         freopen("out.txt","w",stdout);
+#define nl            "\n"
+#define PI            acos(-1.0)
+#define mem(arr,val)  memset(arr,val,sizeof(arr))
+#define pb            push_back
+#define mp            make_pair
+#define PR            pair<ll,ll>
+#define ff            first
+#define ss            second
+#define mod           10000007
+#define INF           1e18
+#define EPS           1e-2
+// ------------------------------------------------------------------------------
+
+// +_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+ DFS +_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+
+
+#define R 1000
+vector <ll> G[R];
+bool visited[R];
+vector <ll> path;
+stack <ll> st;
+ll x = -1; 
+
+void initGraph(vector <ll> v[R], ll x , ll y){
+    v[x].push_back(y);
+}
+
+void graphInput(){ //input using adjacency list
+
+    initGraph(G, 1, 2);
+    initGraph(G, 1, 3);
+    initGraph(G, 2, 1);
+    initGraph(G, 2, 7);
+    initGraph(G, 3, 1);
+    initGraph(G, 3, 4);
+    initGraph(G, 3, 5);
+    initGraph(G, 4, 3);
+    initGraph(G, 5, 3);
+    initGraph(G, 5, 6);
+    initGraph(G, 6, 5);
+    initGraph(G, 7, 2);
+
+}
+
+void showGraphAdjacencyList(){
+    for(int i = 0; i<=R ; i++){
+        cout<<"["<<i<<"] = ";
+        for(int j = 0; j<G[i].size(); j++){
+            cout<<G[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
+
+void DFS(int sr){
+    
+    st.push(sr);
+    while(!st.empty()){
+        ll u = st.top();
+        visited[u]=true;
+        if(x == st.top()){
+            path.push_back(x);
+            st.pop();
+        }
+        else{
+            for(int i=0; i<G[u].size(); i++){
+                ll v = G[u][i];
+                if(!visited[v]){
+                    st.push(v);
+                    break;
+                }
+            }
+            x = u;
+        }
+    }
+}
+
+void showPath(){
+
+    reverse(path.begin(), path.end());
+    for(int i=0; i<path.size(); i++){
+        cout<<path[i]<<" ";
+    }
+}
+
+void NoCiLLaX(){
+
+    graphInput();
+    DFS(1);
+    showPath();
+}
+
+// +_+_+_+_+_+_+_+_+_+_+_+_+_+_+ 2D GRID +_+_+_+_+_+_+_+_+_+_+_+_+_+_+
+
+int dx[8] = {1, 1, 1, 0, 0, -1, -1, -1};
+int dy[8] = {0, 1, -1, 1, -1, 0, 1, -1};
+ll m = 8, n = 8;    // Size of Grid
+
+struct Mat{
+    char ch;
+    bool B;
+    ll dist;
+}matrix[10][10];    // Adust with Max possible value
+
+void printVisitedCells() {
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            if (matrix[i][j].B) {
+                cout << "(" << i << ", " << j << ") ";
+            }
+        }
+    }
+    cout << endl;
+}
+
+
+ll BFS(ll startX, ll startY, ll destX, ll destY) {
+    int cnt = 0;
+    queue<PR> Q;
+    Q.push({startX, startY});
+    matrix[startX][startY].B = true;
+    matrix[startX][startY].dist = 0;  // Distance from start to start is 0
+
+    while (!Q.empty()) {
+        PR v = Q.front();
+        Q.pop();
+
+        if (v.first == destX && v.second == destY) {
+            // Destination reached
+            return matrix[destX][destY].dist;
+        }
+
+        for (int i = 0; i < 8; i++) {
+            ll r = v.first + dx[i];
+            ll c = v.second + dy[i];
+
+            if (r < 0 || c < 0 || r >= m || c >= n || matrix[r][c].B == true) continue;
+
+            Q.push({r, c});
+            matrix[r][c].B = true;
+            matrix[r][c].dist = matrix[v.first][v.second].dist + 1;  // Update distance
+            cnt++;
+        }
+    }
+
+    // Destination not reachable
+    return -1;
+}
+
+void NoCiLLaX(){
+
+    cout<< BFS(0, 0, 7, 7) << endl;
+    printVisitedCells();
+
+}
+
+
+
+

@@ -4,6 +4,7 @@
 #include <vector>
 #include <queue>
 #include <utility>
+#include <algorithm>
 using namespace std;
 // ------------------------------------------------------------------------------
 typedef unsigned int ui;

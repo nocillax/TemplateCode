@@ -28,6 +28,40 @@ typedef long double ldb;
 #define EPS           1e-2
 // ------------------------------------------------------------------------------
 
+// +_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+ BST +_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+
+
+ll BST(ll arr[], ll sz, ll val){   // Binary search tree
+    ll left = 0;
+    ll right = sz-1;
+    while ( left <= right ){
+        
+        ll mid = (left + right) / 2;
+    
+        if(arr[mid] == val) return mid;
+
+        else if(arr[mid] < val) {
+            left = mid + 1;
+        }
+        else if(arr[mid] > val){
+            right = mid - 1;
+        }
+    }
+    return -1;
+}
+void NoCiLLaX(){
+
+    ll sz; cin >> sz;
+    ll arr[sz];
+
+    for(ll i = 0; i < sz; i++){
+        cin >> arr[i];
+    }
+
+    ll val; cin >> val;
+    ll c = BST(arr, sz, val);
+    cout << c << endl;
+}
+
 // +_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+ DFS +_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+
 
 #define R 1000
@@ -118,18 +152,6 @@ struct Mat{
     ll dist;
 }matrix[10][10];    // Adust with Max possible value
 
-void printVisitedCells() {
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
-            if (matrix[i][j].B) {
-                cout << "(" << i << ", " << j << ") ";
-            }
-        }
-    }
-    cout << endl;
-}
-
-
 ll BFS(ll startX, ll startY, ll destX, ll destY) {
     int cnt = 0;
     queue<PR> Q;
@@ -166,7 +188,6 @@ ll BFS(ll startX, ll startY, ll destX, ll destY) {
 void NoCiLLaX(){
 
     cout<< BFS(0, 0, 7, 7) << endl;
-    printVisitedCells();
 
 }
 

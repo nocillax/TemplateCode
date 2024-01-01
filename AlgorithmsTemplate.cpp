@@ -20,6 +20,7 @@ typedef long double ldb;
 #define mem(arr,val)  memset(arr,val,sizeof(arr))
 #define pb            push_back
 #define mp            make_pair
+#define mpl           make_pair<ll,ll>
 #define PR            pair<ll,ll>
 #define ff            first
 #define ss            second
@@ -185,10 +186,28 @@ ll BFS(ll startX, ll startY, ll destX, ll destY) {
     return -1;
 }
 
+void showPath(ll destX, ll destY){
+    vector<PR> path;
+    PR val = mp(destX, destY);
+    path.push_back(val);
+    
+    while(matrix[destX][destY].way != mpl(0,0)){
+        val = matrix[destX][destY].way;
+        path.push_back(val);
+        destX = val.first;
+        destY = val.second;
+    }
+    reverse(path.begin(), path.end());
+    
+    for(ll i = 0; i < path.size(); i++){
+        cout<<path[i].first<<", "<<path[i].second<<nl;
+    }
+}
+
 void NoCiLLaX(){
 
-    cout<< BFS(0, 0, 7, 7) << endl;
-
+    cout<< BFS(0, 0, 7, 7) << nl;
+    showPath(7,7)<<nl;
 }
 
 
